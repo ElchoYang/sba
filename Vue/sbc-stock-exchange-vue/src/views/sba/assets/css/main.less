@@ -1,0 +1,905 @@
+@import (once) "./common.less";
+
+ 
+
+.header .el-row {
+  margin: 0;
+  background-color: #fff;
+  padding: 1.5rem 0 0;
+}
+.bros .section_body .section_body_Row {
+  margin-top: 1.5rem;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  width: 100%;
+  height: 100%;
+}
+
+.app .el-container {
+  display:block;
+}
+.el-container {
+  max-width: @mainWidth; //670px
+  margin: 0 auto;
+}
+.el-header {
+  text-align: center;
+  margin: 2rem auto 0;
+  font-size: 30px;
+  font-weight: @font-SemiBold;
+  color: #000000;
+}
+.el-aside,
+.el-main {
+  overflow: visible;
+}
+.el-row {
+  margin: 30px 0;
+}
+.el-form-item__content .el-row:first-child,
+.el-form-item__content .el-row:last-child {
+  margin: 0;
+}
+.el-form-item {
+  margin-bottom: 24px;
+}
+.el-select,
+.el-input {
+  margin: 6px 0 0;
+}
+
+// form label left
+
+//Form label
+.el-form-item__label,
+.el-form--label-top,
+.el-form--label-left,
+.el-form--label-right {
+  color: black;
+  padding: 0 !important;
+  font-size: 1rem;
+  font-weight: 300
+}
+.el-form-item__label {
+  line-height: @line-height-label;
+}
+.el-form-item.is-required .el-form-item__label::before {
+  content: none;
+}
+
+// Swith
+.el-switch__core {
+  transform: scale(1.5);
+}
+
+//Default Button
+.el-button {
+  // Edit Button
+  color: #ff3333;
+  border-color: #ff3a30;
+}
+
+.el-button:hover {
+  border-color: #ff3a30;
+}
+
+.el-button--default.is-disabled {
+  color: #c0c4cc;
+  border-color: #ebeef5;
+}
+
+.el-button:focus,
+.el-button:hover {
+  background-color: white;
+  color: red;
+}
+
+.el-button--mini,
+.el-button--mini.is-round {
+  padding: 5px 15px;
+}
+
+.el-button--text{
+  border: none;
+}
+// next button
+.nextbtn {
+  margin: 0;
+  padding: 1rem 0;
+  // background: @nextbtn-bg;
+}
+.app{
+    .nextbtn {
+    padding: 1rem 20px;
+  }
+}
+//edit button
+.editbtn {
+  border: 1px solid @editbtn-bordercolor;
+  color: @editbtn-fontcolor;
+  background-color: @editbtn-bgcolor;
+}
+.editbtn:hover {
+  border: 1px solid @editbtn-active-bordercolor;
+  color: @editbtn-active-fontcolor;
+  background-color: @editbtn-active-bgcolor;
+}
+.editbtn:active,.editbtn:focus  {
+  border: 1px solid @editbtn-bordercolor;
+  color: @editbtn-fontcolor;
+  background-color: @editbtn-bgcolor;
+}
+//Signature clear button
+.clearbtn, .el-button:active, .el-button:focus{
+    color: #f33;
+    border-color: #ff3a30;
+    outline: 0;
+}
+
+//Red Button
+.el-button--danger {
+  // Next Button
+  color: #ffffff;
+  background-color: #ff3333;
+  border-color: #ff3333;
+  font-size: 1rem;
+  font-weight: 600;
+  font-family: SFProText;
+}
+.el-button--danger:focus {
+  background: #ff3333;
+  color: #fff;
+}
+.el-button--danger:hover {
+  background: #ee1818;
+  color: #fff;
+}
+
+//Info Button
+.el-button--info {
+  // Back Button
+  color: #fff;
+  background-color: #c0c0c0;
+  border-color: #c0c0c0;
+}
+
+.el-button--info:focus,
+.el-button--info:hover {
+  background: #a6a9ad;
+  border-color: #a6a9ad;
+  color: #fff;
+}
+
+//el-select
+.el-select-dropdown {
+  margin: 0 !important;
+  padding: 0 0 1rem;
+}
+
+.el-select .el-input .el-select__caret {
+  color: #ff3333;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+.el-popper .popper__arrow,
+.el-popper .popper__arrow::after {
+  display: block;
+}
+
+//el-input
+.el-input__inner {
+  height: 48px;
+  border: 1px solid #c0c0c0;
+  color: black;
+  font-weight: 500;
+  font-size: 1rem;
+}
+.placeholder{
+  position: absolute;
+  top:5px;
+  left:0;
+  z-index:10;
+  font-weight:normal;
+  color:@color-greyPlaceholder;
+}
+::-webkit-input-placeholder
+{
+    color:@color-greyPlaceholder;
+}
+:-moz-placeholder
+{
+    color:@color-greyPlaceholder ;
+}
+:-ms-input-placeholder
+{
+    color:@color-greyPlaceholder;
+}
+
+  .el-input__inner::placeholder{
+    color:@color-greyPlaceholder;
+  }
+   .el-input__inner::-ms-clear, ::-ms-reveal{  // clear X in IE , clear password eye icon in IE
+   display:none;
+  }
+  .el-form-item.is-success .el-input__inner, 
+  .el-form-item.is-success .el-input__inner:focus,
+  .el-form-item.is-success .el-textarea__inner, 
+  .el-form-item.is-success .el-textarea__inner:focus{
+    border-color: #c0c0c0;
+    font-weight: 500;
+  }
+  .el-form-item.is-success .el-input__validateIcon {
+    display: none;
+  }
+
+.el-form-item__error {
+  font-size: 1rem;
+  position: relative;
+}
+
+.el-input.is-disabled .el-input__inner {
+  background-color: white;
+}
+//Arrow
+.el-input__suffix {
+  right: 20px;
+}
+
+//Radio button
+.el-radio {
+  color: black;
+}
+.el-radio__label {
+  font-size: 1rem;
+}
+.el-radio__input {
+  width: 1.25rem; //20px
+  height: 1.25rem;
+  background: transparent;
+  border-radius: 100%;
+  border: 2px solid #c0c0c0;
+}
+.el-radio__inner {
+  width: 0.75rem;
+  height: 0.75rem;
+  border: none;
+  background: transparent;
+}
+.el-radio.is-checked .el-radio__input {
+  border-color: red;
+}
+.el-radio__input.is-checked .el-radio__inner {
+  border-color: white;
+  background: red;
+  margin: 0.25rem;
+  box-shadow: none;
+}
+.el-radio:focus:not(.is-focus):not(:active) .el-radio__inner,
+.el-radio:focus:not(.is-focus):not(:active):not(.is-disabled) .el-radio__inner {
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+
+.el-radio__inner::after {
+  background: transparent;
+}
+
+.el-radio__input.is-checked + .el-radio__label {
+  color: black;
+}
+
+// Icon
+.el-icon-tickets:before {
+  color: red;
+}
+
+// dialog
+.el-dialog {
+  border-radius: 8px;
+  
+  .el-dialog__header {
+    padding-top: 18px;
+    display: flex;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    justify-content: center;
+
+    .el-dialog__headerbtn {
+       top:10px !important;
+      //  left:15px;
+      order: 1;
+      -ms-flex-order: 1;
+      //position: relative;
+      top: 0;
+      left: 0;
+      right:auto;
+      .el-dialog__close {
+        color: #ff3333;
+        font-size: 22px;
+        font-weight: 700;
+        padding: 10px 0 0 10px;
+      }
+    }
+    .dialog-title {
+      font-size: 20px;
+      font-weight: 700;
+      order: 2;
+      width: 100%;
+      text-align: center;
+      display:block;
+      margin-left:2rem;
+    }
+  }
+
+  .dialog-body {
+    margin-top: 30px;
+  }
+  .dialogInner-content {
+    text-align: center;
+    font-weight: 700;
+    color: black;
+  }
+  .dialog-button {
+    margin: 8px 0;
+  }
+
+  main.main {
+    padding: 0 1rem;
+    form > div.el-row:nth-last-child(2) {
+      display: none;
+    }
+  }
+
+
+  .el-dialog__footer {
+    .el-row {
+      margin: 0 0 10px;
+    }
+  }
+}
+
+.el-dialog.is-fullscreen {
+  border-radius: 0;
+}
+
+
+.bros .pc {
+  .el-dialog {
+    max-width: 660px;
+    max-height:640px;
+  }
+    .dialogCenter{
+    top: 10%;
+    }
+}
+.bros .pc , .app{
+  .dialogCenter{
+    .dialogScroll{
+      .el-dialog__body{
+        .editBody{
+          position: absolute;
+          left:0;
+          width:100%;
+          max-height:445px;
+          overflow: auto;
+          .editMain{
+            padding:0 2rem;
+          }
+        }
+      }
+      .el-dialog__footer{
+        margin-top:1rem;        
+          position: absolute;
+          width:100%;
+          bottom:0; 
+          .el-row{
+               margin:0;
+          }
+      }      
+    }
+  }
+}
+
+// save dialog
+.saveDialog {
+  .el-dialog {
+    width: 90%;
+    max-width: 660px;
+
+    .successCircle {
+      position: relative;
+      width: 100%;
+      margin: 0;
+      padding: 20px 0;
+    }
+    .successCircle .el-col {
+      position: absolute;
+      top: -30px;
+      z-index: 100;
+    }
+    .successIcon {
+      width: 64px;
+      height: 64px;
+      box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.05), 0 2px 5px 0 rgba(0, 0, 0, 0.05);
+      background-color: #229922;
+      border-color: #229922;
+      border-radius: 32px;
+      color: #fff;
+      margin: 0 auto;
+      display: block;
+      font-size: 22px;
+      cursor: auto;
+    }
+  }
+}
+
+//card details dialog
+.cardDetails .el-dialog,
+.addonCard .el-dialog {
+  width: 90%;
+  max-width: 660px;
+  .el-dialog__body {
+    padding: 0;
+  }
+  .cardImgSection {
+    background-color: #f6f6f6;
+    .el-row {
+      margin: 0.5rem 0 0;
+      padding: 0 0 1rem;
+    }
+    .cardLogo img {
+      width: 10rem;
+      height: auto;
+      margin: 0.5rem 0 0;
+    }
+    .el-col {
+      padding: 1rem 0 0;
+    }
+    .cardName {
+      font-weight: bold;
+      font-size: 1rem;
+      color: black;
+    }
+  }
+  .cardTextSection {
+    padding: 18px 27px 30px;
+    .el-row {
+      margin: 0;
+      .el-col {
+        margin: 0;
+        padding: 0;
+        h3 {
+          font-size: 1rem;
+          text-align: left;
+          margin: 0;
+          color: black;
+        }
+        ul {
+          // list-style: none;
+          margin: 0 auto 1rem;
+          padding: 0;
+          max-width: 650px;
+          li {
+            text-align: left;
+            list-style-type: disc;
+            margin-left: 1rem;
+            color: black;
+          }
+        }
+        .more {
+          a {
+            color: red;
+          }
+        }
+      }
+    }
+  }
+}
+
+// addonCard dialog
+.addonCard .el-dialog {
+  .cardImgSection {
+    .el-carousel__container {
+      height: 220px;
+      .cardLogo .imageSec {
+        position: relative;
+        width: 10rem;
+        margin: 0 auto;
+        .iIcon {
+          top: 1rem;
+        }
+      }
+    }
+    .el-carousel__indicators {
+      .el-carousel__indicator {
+        .el-carousel__button {
+          background-color: #d1d1d2;
+          width: 8px;
+          height: 8px;
+          border-radius: 4px;
+        }
+      }
+      .el-carousel__indicator.is-active {
+        .el-carousel__button {
+          background-color: red;
+        }
+      }
+    }
+  }
+  .cardTextSection {
+    padding-bottom: 0;
+    .el-col-offset-3 {
+      margin-left: 12.5% !important;
+    }
+    .el-col-offset-6 {
+      margin-left: 25% !important;
+    }
+    .cardLimited {
+      margin: 0 0 1rem;
+      color: black;
+    }
+  }
+  .el-dialog__footer {
+    padding-bottom: 2px;
+    .dialog-footer .el-col {
+      padding: 8px 0;
+    }
+  }
+}
+
+.showInfo {
+  .dialogInner-content {
+    text-align: left;
+  }
+}
+
+// email autocomplete
+.el-autocomplete-suggestion {
+  margin: 0 !important;
+}
+.el-autocomplete-suggestion li{
+  padding: 0 20px;
+  margin: 0;
+  cursor: pointer;
+  line-height: 2rem;
+  white-space: nowrap;
+  list-style: none;
+}
+.el-autocomplete-suggestion li.highlighted,
+.el-autocomplete-suggestion li:hover {
+  background-color: #eee;
+  color: #dd0000;
+}
+.el-autocomplete-suggestion__wrap {
+  padding: 0;
+}
+
+//Customize Class
+.subLabel {
+  color: #545454;
+  font-size: 12px;
+  font-weight: 300;
+  // height: 14px;
+}
+.linkText{
+  float: right;
+  font-size: 12px;
+  color: #545454;
+  cursor: pointer;
+  font-weight: 300;
+  height: 14px;
+}
+.linkText:hover{
+  text-decoration: underline;
+}
+
+.labelIcon {
+  line-height: 20px;
+}
+
+.iIcon {
+  width: 14px;
+  height: 14px;
+  border: @border-size-iIcon solid @grey-iIcon;
+  border-radius: 8px;
+  display: inline-block;
+  line-height: @line-height-label - (2 * @border-size-iIcon);
+  color: @grey-iIcon;
+  font-size: 10px;
+  text-align: center;
+  margin-left: 5px;
+  cursor: pointer;
+}
+
+.imageIcon{
+  width: 16px;
+  height: 16px;
+  margin-left: 5px;
+  display: inline-block;
+  cursor: pointer; 
+  vertical-align:middle;
+}
+ 
+
+.SubDes .el-form-item__content{
+  line-height: 18px;
+}
+
+
+// toggle box 
+.togglebox{
+  margin:0 -2rem;
+}
+.hideBox {
+  padding: 1rem 2rem;
+  margin: 0 0 20px;
+  background-color: @grey-background;
+}
+
+// ack page
+.card .el-card__body {
+  padding: 0 20px;
+}
+
+.subTitle{
+  margin:1rem 0;
+  font-size:1rem;
+  font-weight:bold;
+}
+.line{
+  border-top:1px solid #ccc;
+}
+
+.el-message-box {
+  .el-message-box__headerbtn{
+      display:none;
+  }
+  .el-button--primary{
+    background-color:#fff;
+  }
+}
+
+
+.el-popup-parent--hidden{
+  // position:fixed;
+  width:100%;
+}
+
+.displayTable{
+  display: table;
+}
+// |||||| screen
+// @media only screen and (orientation: portrait) and (max-width: @ipadMinWidth) {
+// }
+
+// ----- screen
+// @media only screen and (orientation: landscape) and (max-width: @ipadMinWidth) {
+// }
+
+
+// For screen <= 1024 mobile browser
+@media only screen and (max-device-width: @desktop1024) {
+  .el-container {
+    max-width: @mainWidth;
+    margin: 0 auto;
+  }
+  .first {
+    height: 13rem;
+  }
+}
+// For screen <= 768px mobile browser
+@media only screen and (max-device-width: @ipadMinWidth) {
+  .el-container {
+    max-width: @mainWidth;
+    margin: 0 auto;
+  }
+  .bros .pc , .app{
+        // dialog
+      .el-dialog {
+        max-height:none;
+        max-width:none;        
+      }
+        .dialogCenter{
+        top:0;
+        .dialogScroll{
+          .el-dialog__body{
+          .editBody{
+            position: absolute;
+            left:0;
+            width:100%;
+              max-height:720px;
+              overflow: auto;
+            .editMain{
+              padding:0 2rem;
+            }
+          }
+          }
+          .el-dialog__footer{
+            margin-top:1rem;
+            .el-row{
+               margin:0;
+             }
+          }
+        }
+      }
+  }  
+  .bros {
+    .section_body .section_body_Row {
+      margin: 0;
+    }
+    .logo_text_dbs{
+      display:none;
+    }
+    .nav{
+      display:none;
+    }
+    .first {
+      height: 13rem;
+      max-width: 15rem;
+    }
+    .pc {
+      width: 100%;
+      margin:0;
+      section.main_section .main_section_content{
+      padding:1rem 0 0;
+      background: transparent;
+      }
+ 
+     // preference togglebox
+     .togglebox{
+       margin:0 -1rem;
+     }
+     .hideBox{
+       padding: 1rem 3rem;
+     }
+    }
+  }
+
+}
+
+// For screen <= 767px
+@media only screen and (max-device-width: @ipadMinWidth - 1) {
+  .bros {
+    .first {
+      height: 18rem;
+    }
+  }
+}
+
+// For screen <= 736px  iphone 6,7,8 plus
+@media only screen and (max-device-width: 736px) {
+  .bros {
+    .first {
+      height: 13rem;
+      max-width: 14rem;
+    }
+  }
+}
+// For screen < 670px mobile browser
+@media only screen and (max-device-width: @mainWidth) {
+  .bros {
+    .section_body .section_body_Row {
+      margin: 0;
+    }
+    .pc {
+      width: 100%;
+      margin:0;
+      section.main_section .main_section_content{
+      padding:1rem 1rem 0;
+      background: transparent;
+      }
+      section.main_section .main_section_button{
+      padding:0 1rem;
+      }  
+      .first {
+        height: 13rem;
+        max-width: 13rem;        
+      }    
+    }
+  }
+}
+
+// For screen <= 414px  
+@media only screen and (max-device-width: @iPhonePlusWidth) {
+  .el-message-box{
+    width:@iPhonePlusWidth;
+  }
+  .bros .pc , .app{
+        // dialog
+      .el-dialog {
+        max-height:none;
+        max-width:none;        
+      }
+        .dialogCenter{
+        top:0;
+        .dialogScroll{
+          .el-dialog__body{
+            .editBody{
+              position: absolute;
+              left:0;
+              width:100%;
+              max-height:450px;
+              overflow: auto;
+              .editMain{
+                padding:0 20px;
+              }
+            }
+          }
+          .el-dialog__footer{
+            margin-top:1rem;
+             .el-row{
+               margin:0;
+             }
+          }
+      }
+    }
+    .first {
+      height: 11rem;
+    }
+  }
+}
+
+// For screen <= 375px 
+@media only screen and (max-device-width: @iPhoneXWidth) {
+  .el-message-box{
+    width:@iPhoneXWidth;
+  }
+  .bros .pc , .app{
+      // dialog
+      .el-dialog {
+        max-height:none;
+        max-width:none;        
+      }
+      .dialogCenter{
+        top:0;
+        .dialogScroll{
+          .el-dialog__body{
+            .editBody{
+              position: absolute;
+              left:0;
+              width:100%;
+              max-height:60%;
+              overflow: auto;
+              .editMain{
+                padding:0 20px;
+              }
+            }
+          }
+          .el-dialog__footer{
+            margin-top:1rem;
+             .el-row{
+               margin:0;
+             }
+          }
+        }
+      }
+      .first {
+        height:10rem;
+      }
+    }
+}
+
+
+// For screen >= 1024 PC browser
+@media only screen and (min-device-width: @desktop1024) {
+  .bros{
+    .pc{
+          .el-container {
+          max-width: none;
+          margin: 0 auto;
+          }
+          .first {
+            height: 13rem;
+          }
+      }
+    .mobile{
+          .el-container {
+          max-width: @mainWidth;
+          margin: 0 auto;
+          }
+          .first {
+            height: 13rem;
+          }
+      }      
+  }
+}
