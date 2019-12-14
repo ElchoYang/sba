@@ -1,0 +1,29 @@
+server:
+  port: 8002
+spring:
+  application:
+    name: provider-user-api
+  jpa:
+    generate-ddl: true
+    open-in-view: true
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.MySQL8Dialect
+        enable_lazy_load_no_trans: true
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/sba?characterEncoding=UTF8&serverTimezone=UTC
+    username: root
+    password: 123456
+
+eureka:
+  instance:
+    prefer-ip-address: true #注册服务使用ip
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+
