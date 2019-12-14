@@ -1,0 +1,26 @@
+Below are some of the wireframes  
+1. Login/Signup for User/Admin 
+2. Display Comparison Charts 
+3. Admin – List existing Stock Exchanges 
+4. Admin – Add Stock Exchange 
+5. Admin – List/Add IPO Details 
+6. User – View IPO Details 
+7. User – Update Profile, Update Password 
+
+
+Below are some of the Angular Components 
+1. ImportExcel 
+2. ManageCompanies 
+3. ManageIPO 
+4. ManageStockExchanges 
+5. CreateCompany 
+6. ComparisonCharts 
+7. UserLogin – Login for both user and Admin 
+8. UserSignup 
+
+
+
+provider-user-api 8002
+provider-company-api 8001
+provider-stockexchange-api 8003
+provider-ipo-api 8004
