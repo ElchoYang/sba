@@ -22,6 +22,7 @@ import java.util.function.Supplier;
 import java.util.logging.Logger;
 import java.io.StringReader;
 
+
 @RestController
 @RequestMapping( value = "/stockexchange/user")
 public class UserController {
@@ -30,28 +31,39 @@ public class UserController {
     @Autowired
     RestTemplate restTemplate;
 
-    @GetMapping("/login")
-    public String login(String name) throws ParserConfigurationException, IOException, SAXException {
-        String s = restTemplate.getForObject("http://provider-user-api/user", String.class);
+    @RequestMapping(value = "/login", method = {RequestMethod.POST})
+    public ResponseEntity<User> login(@RequestBody User user, UriComponentsBuilder ucBuilder) throws ParserConfigurationException, IOException, SAXException {
+        log.info("客户端传输过来的用户信息是："+user);
+        ResponseEntity<User> entity =  restTemplate.postForEntity("http://provider-user-api/login",user, User.class);
+        HttpStatus statusCode  = entity.getStatusCode();
+        log.info("Status Code: " + statusCode);
 
+        User _user = entity.getBody();
+        log.info("_user: " + _user);
 
-        String xml = StringEscapeUtils.escapeXml("<i>ABC'&</i>");
-        log.info("---------------");
-        log.info(StringEscapeUtils.escapeXml(xml));
-
-
-     /*   DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-        DocumentBuilder builder = factory.newDocumentBuilder();
-        Document doc = builder.parse(new InputSource((new StringReader(xml))));
-*/
-
-
-        //System.out.println(StringEscapeUtils.escapeXml("<i><pay>ABC&</pay><go><ddd' cc & ABC</go></i>"));
-         return "login User: " +s;
+        return new ResponseEntity<>(_user, HttpStatus.OK);
     }
 
-    @CrossOrigin
-    @GetMapping("/all")
+    @RequestMapping(value = "/signup", method = {RequestMethod.POST})
+    public ResponseEntity<Integer> signup(@RequestBody User user, UriComponentsBuilder ucBuilder){
+        log.info("客户端传输过来的用户信息是："+user);
+        ResponseEntity<Integer> entity =  restTemplate.postForEntity("http://provider-user-api/singup",user, Integer.class);
+        HttpStatus statusCode  = entity.getStatusCode();
+        log.info("Status Code: " + statusCode);
+
+        Integer status = entity.getBody();
+
+        return new ResponseEntity<>(status, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/logout", method = {RequestMethod.POST})
+    public ResponseEntity<Integer> logout(){
+        log.info("logout Successful");
+        return new ResponseEntity<>(0, HttpStatus.OK);
+    }
+
+   // @GetMapping("/all")
+    @RequestMapping(value = "/all", method = {RequestMethod.GET, RequestMethod.POST})
     public ResponseEntity<List<User>> checkAllUser(String name, UriComponentsBuilder ucBuilder){
         ResponseEntity<List> entity =  restTemplate.getForEntity("http://provider-user-api/users", List.class);
         HttpStatus statusCode  = entity.getStatusCode();
