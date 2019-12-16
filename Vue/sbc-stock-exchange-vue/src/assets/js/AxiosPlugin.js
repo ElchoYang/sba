@@ -55,9 +55,9 @@ Axios.interceptors.request.use(config => {
   if (sessionStorage.token) {
     config.headers.Authorization = sessionStorage.token
   }
-  if (!config.disableLoading) {
-    showFullScreenLoading()
-  }
+  // if (!config.disableLoading) {
+  //   showFullScreenLoading()
+  // }
   return config
 }, error => {
   return Promise.reject(error)
@@ -69,12 +69,6 @@ Axios.interceptors.response.use(response => {
   try {
     console.log('request : ' + response.request.responseURL)
     console.log(response.data)
-
-    window.location.href = response.data.Data
-
-    if (response.data.Status === 4) {
-      window.location.reload()
-    }
   } catch (error) {
     console.log(error)
     console.log(response)

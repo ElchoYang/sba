@@ -16,6 +16,13 @@ export const RequestAllUser = (data) => {
   })
 }
 
+export const Login = (data) => {
+  return Axios.get(BASE_PATH + '/stockexchange/user/login').then(function (res) {
+    console.log(res)
+    return res
+  })
+}
+
 export const loaduploadStep01Data = () => {
   return Axios.post(BASE_PATH + '/stockexchange/DocUpload/uploadstep01/LoadPageData').then(function (res) {
     return res

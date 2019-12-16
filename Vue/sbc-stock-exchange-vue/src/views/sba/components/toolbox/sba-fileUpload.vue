@@ -1,29 +1,23 @@
 <template id="fileUpload">
   <div class="fileUpload">
     <div class="selectArea">
-      <el-select style='width:100%' v-model="ddlSelectedValue" @change="getSelectText" :placeholder='$t("msg.Common.PlcH.Select")'>
-        <el-option v-for='(item, index) in ddl.options' :key='index' :label='$t(item.Text)' :value='item.Value'>
-        </el-option>
-      </el-select>
       <span class="btnUpload" @click="btnUpload_click($event)">{{$t("msg.Common.Btn.Upload")}}</span>
     </div>
-    <label v-if="tips!=''">{{tips}}</label>
     <div class="uploadGroup">
       <div v-for="(item ,index) in allFileList" :key='index'>
         <div class="selectText">{{$t(item.id)}}</div>
         <transition-group tag="ul" :class="[ 'el-upload-list', 'el-upload-list--picture-card']" name="el-list">
           <li v-for="(file,index2) in item.files" :key='index2' :class="['el-upload-list__item']">
             <img class="el-upload-list__item-thumbnail img-opacity" :src="file.url" :alt='file.name'>
-            <!-- <embed type="application/pdf" class="el-upload-list__item-thumbnail" :src="file.url" :alt='file.name'> -->
-            <span class="mark">{{$t("msg.component.FileUpload.AppOnly")}}</span>
-            <i class="el-icon-circle-close btn-close" @click="handleRemove (item.id, file)"></i>
+           
+            <i class="el-icon-circle-close btn-close" @click="close()"></i>
             <el-progress v-if="file.status === 'uploading'" type="circle" :stroke-width="6" :percentage="parsePercentage(file.percentage)">
             </el-progress>
           </li>
         </transition-group>
       </div>
     </div>
-    <el-upload ref="elUpload" action="#" list-type="picture-card" :name="ddlSelectedValue" :on-preview="handlePictureCardPreview" :on-change="handleChange" :accept="acceptList" :limit="6" :auto-upload="false" :show-file-list="false">
+    <el-upload ref="elUpload" action="#" list-type="picture-card" name="file" :on-preview="handlePictureCardPreview" :on-change="handleChange" :accept="acceptList" :limit="6" :auto-upload="false" :show-file-list="false">
       <i class="el-icon-plus"></i>
     </el-upload>
   </div>
@@ -31,67 +25,22 @@
 
 <script type="text/javascript">
 import sbaGeneralJs from './../../assets/js/sba-general.js'
-import { uploadFile, removeUploadFile } from '@/views/sba/apis/index'
+import { uploadFile } from '@/views/sba/apis/API'
 export default {
   template: '#fileUpload',
   components: {},
   data: () => ({
     ddlSelectedText: '',
     ddlSelectedValue: '',
-    acceptList: '.GIF,.JPG,.JPEG,.TIF,.TIFF,.BMP,.DOC,.DOCX,.PPT,.PPTX,.MDI,.PNG,.PDF',
+    acceptList: '.XLSX,.XLS',
     allFileList: [],
     uploadInput: {}
   }),
   props: {
-    ddl: {
-      type: Object,
-      default: () => {
-        return {
-          id: 'myFileUpload',
-          name: 'myFileUpload',
-          options: [{ Text: '', Value: '' }]
-        }
-      }
-    },
-    tips: {
-      type: String,
-      default: ''
-    },
-    fileLimit: {
-      maxFileSize: 0,
-      maxFileCount: 0,
-      currentCount: 0
-    }
   },
   methods: {
     parsePercentage (val) {
       return parseInt(val, 10)
-    },
-    handleRemove (id, file) {
-      console.log('handleRemove')
-      console.log(id, file)
-      const self = this
-      removeUploadFile(file.uid).then(res => {
-        let index = self.allFileList.findIndex(x => {
-          return x.id === id
-        })
-
-        if (index >= 0) {
-          let index2 = self.allFileList[index].files.findIndex(x => {
-            return x.uid === file.uid
-          })
-          if (index2 >= 0) {
-            self.allFileList[index].files.splice(index2, 1)
-            self.fileLimit.currentCount--
-          }
-          if (self.allFileList[index].files.length === 0) {
-            self.allFileList.splice(index, 1)
-            self.fileLimit.currentCount--
-          }
-        }
-      }).catch((error) => {
-        console.log(error.message)
-      })
     },
     handlePictureCardPreview (file) {
       this.dialogImageUrl = file.url
@@ -99,23 +48,12 @@ export default {
     },
     handleChange (file, fileList) {
       const self = this
-      let index = 0
-      let index2 = 0
       console.log('handleChange:')
       console.log(file, fileList)
-      self.fileLimit.currentCount++
-      if (self.fileLimit.currentCount > self.fileLimit.maxFileCount) {
-        self.$message({
-          message: self.$t('msg.component.FileUpload.FileCount').replace('##', self.fileLimit.maxFileCount),
-          type: 'warning',
-          center: true
-        })
-        self.$refs['elUpload'].uploadFiles = []
-        self.fileLimit.currentCount--
-        return
-      }
       const extension = file.name.substring(file.name.lastIndexOf('.')).toUpperCase()
       const extensions = self.acceptList.split(',')
+      console.log('extersion: ' + extension)
+      console.log('extersion: ' + extensions)
       const isValidType = extensions.indexOf(extension) >= 0
       if (!isValidType) {
         self.$message({
@@ -124,7 +62,6 @@ export default {
           center: true
         })
         self.$refs['elUpload'].uploadFiles = []
-        self.fileLimit.currentCount--
         return
       }
 
@@ -135,36 +72,14 @@ export default {
           center: true
         })
         self.$refs['elUpload'].uploadFiles = []
-        self.fileLimit.currentCount--
         return
       }
 
-      const isLstSize = file.size <= self.fileLimit.maxFileSize
-      if (!isLstSize) {
-        self.$message({
-          message: self.$t('msg.component.FileUpload.FileSizeExceed').replace('##', self.fileLimit.maxFileSize / 1024 / 1024),
-          type: 'warning',
-          center: true
-        })
-        self.$refs['elUpload'].uploadFiles = []
-        self.fileLimit.currentCount--
-        return
-      }
-
-      index = self.allFileList.findIndex(x => {
-        return x.id === self.ddlSelectedText
+      self.allFileList = []
+      self.allFileList.push({
+        id: file.name,
+        files: [file]
       })
-
-      if (index >= 0) {
-        self.allFileList[index].files.push(file)
-      } else {
-        index = self.allFileList.length
-        self.allFileList.push({
-          id: self.ddlSelectedText,
-          files: [file]
-        })
-      }
-      index2 = self.allFileList[index].files.length - 1
 
       file.status = 'uploading'
       let config = {
@@ -177,59 +92,33 @@ export default {
         }
       }
       let formData = new FormData()
-      formData.append(self.ddlSelectedValue, file.raw, file.name)
+      formData.append('file', file.raw, file.name)
       formData.append('uid', file.uid)
       uploadFile(formData, config).then((res) => {
         console.log(res)
         if (res.data.Status === 0) {
-          file.status = 'ready'
+          file.Status = 'ready'
         } else {
-          self.fileLimit.currentCount--
-          if (index2 === 0) {
-            self.allFileList.splice(index, 1)
-          } else {
-            self.allFileList[index].files.splice(index2, 1)
-          }
           self.showMessage(self, res.data)
         }
       }).catch((error) => {
         console.log(error.message)
-        self.fileLimit.currentCount--
-        if (index2 === 0) {
-          self.allFileList.splice(index, 1)
-        } else {
-          self.allFileList[index].files.splice(index2, 1)
-        }
       })
 
       self.$refs['elUpload'].uploadFiles = []
     },
     btnUpload_click (event) {
       const self = this
-      if (!self.ddlSelectedValue) {
-        self.$message({
-          message: self.$i18n.t('msg.component.FileUpload.PselectFile'),
-          type: 'warning',
-          center: true
-        })
-        return
-      }
       let me = event.target
       let myParent = sbaGeneralJs.methods.findParentByClassName(me, 'fileUpload')
       self.uploadInput = myParent.getElementsByClassName('el-upload__input')[0]
       self.uploadInput.click()
     },
-    getSelectText (value) {
-      let self = this
-      self.ddlSelectedText = self.ddl.options.filter((currentOption, index) => {
-        return currentOption.Value === value
-      })[0].Text
+    close () {
+      this.allFileList = []
     }
   },
   mounted: function () {
-    const self = this
-    self.ddlSelectedValue = self.ddl.options[0].Value
-    self.ddlSelectedText = self.ddl.options[0].Text
   }
 }
 </script>

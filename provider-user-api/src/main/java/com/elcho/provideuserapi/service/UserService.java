@@ -53,4 +53,11 @@ public interface UserService {
      * @return
      */
     boolean isUserExists(String userName);
+
+    /****************
+     *
+     * @param userName
+     * @return
+     */
+    boolean isLoginUserExists(String userName, String password);
 }

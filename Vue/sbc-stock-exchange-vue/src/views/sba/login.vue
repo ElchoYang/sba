@@ -14,8 +14,8 @@
         <el-col :span="24" class="main_section_button">
           <!-- Submit Button -->
           <el-row class="nextbtn">
-            <el-col :span="6" :push="18">
-              <el-button style='width:100%' type='danger' round @click='getAA()'>{{$t("msg.Common.Btn.Login")}}</el-button>
+            <el-col :span="12" :push="6">
+              <el-button style='width:100%' type='danger' round @click='submitForm()'>{{$t("msg.Common.Btn.Login")}}</el-button>
             </el-col>
           </el-row>
         </el-col>
@@ -25,8 +25,9 @@
 </template>
   
 <script>
-import { SubmitListForlogin } from '@/views/sba/apis/formPost'
+
 import { RequestAllUser } from '@/views/sba/apis/formLoad'
+import { login } from '@/views/sba/apis/API'
 import loginform from '@/views/sba/components/forms/loginform'
 // import Axios from '@/assets/js/AxiosPlugin'
 export default {
@@ -50,23 +51,11 @@ export default {
       })
     },
     // call the api methods to retrieve data from api or submit data to api
-    Submit () {
+    submitForm () {
       const self = this
-      const loginform = this.$refs['loginform'].getFormModel()
-      SubmitListForlogin(loginform).then((res) => {
-        if (res.data.Status === 10) {
-          self.$nextTick(() => {
-          })
-        } else {
-          // other case
-          self.showMessage(self, res.data)
-        }
-      }).catch((error) => {
-        console.log(error.message)
-      })
-    },
-    getFormModel () {
-      return this.formModel
+      const data = self.$refs['loginform'].getFormModel()
+      console.log(data)
+      login('loginform', data, self)
     }
   }
 }

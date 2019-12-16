@@ -28,11 +28,7 @@ export const SubmitList = (param, data, self) => {
     return res
   }).then(function (res) {
     self.isBtnLoading = false
-    if (res.data.Status === 6 || res.data.Status === 3) { // MVC response success or step wrong
-      // form08 , docupload 02, trigger sba pageChange
-      if (param === 'form08') {
-        self.triggerPageChange('/stockexchange/' + res.data.Data.toLowerCase())
-      }
+    if (res.data.Status === 6 || res.data.Status === 3) { // response success
       self.$router.push({
         name: res.data.Data.toLowerCase(),
         query: {...self.$route.query}
@@ -45,12 +41,6 @@ export const SubmitList = (param, data, self) => {
   }).catch(function (error) {
     self.isBtnLoading = false
     console.log(error.message)
-  })
-}
-
-export const SubmitListForlogin = (data) => {
-  return Axios.post(BASE_PATH + '/stockexchange/login/submit', data).then(function (res) {
-    return res
   })
 }
 

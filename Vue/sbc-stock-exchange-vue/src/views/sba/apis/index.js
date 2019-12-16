@@ -16,11 +16,6 @@ export const getLang = () => {
   })
 }
 
-export const uploadFile = (data, config) => {
-  return Axios.post(BASE_PATH + '/stockexchange/DocUpload/uploadstep02/UploadFile', data, config).then(function (res) {
-    return res
-  })
-}
 export const removeUploadFile = (data) => {
   return Axios.post(BASE_PATH + '/stockexchange/DocUpload/uploadstep02/RemoveUploadFile', { 'uid': data }).then(function (res) {
     return res

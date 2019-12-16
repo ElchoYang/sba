@@ -73,23 +73,42 @@ public class UserController {
         return new ResponseEntity<>(_user, HttpStatus.OK);
     }
 
+
     // sign up
-    @RequestMapping(value = "/user", method = RequestMethod.POST)
-    public ResponseEntity<Void> createUser(@RequestBody User user, UriComponentsBuilder ucBuilder) {
-        System.out.println("客户端传输过来的用户信息是："+user);
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    public ResponseEntity<User> login(@RequestBody User user, UriComponentsBuilder ucBuilder) {
+        User _user = new User();
+
+        log.info("consumer端传输过来的用户信息是："+user);
+        //判断用户名是否已经存在
+        if(!userService.isLoginUserExists(user.getUserName(), user.getPassword())) {
+            log.info("用户名：%s Do not Exist\n" + user.getUserName());
+            return new ResponseEntity<>(_user, HttpStatus.CONFLICT);
+        }
+        //
+        _user = userService.queryByUserName(user.getUserName());
+        log.info("Login successful!");
+        return new ResponseEntity<>(_user, HttpStatus.OK);
+    }
+
+    // sign up
+    @RequestMapping(value = "/singup", method = RequestMethod.POST)
+    public ResponseEntity<Integer> createUser(@RequestBody User user, UriComponentsBuilder ucBuilder) {
+        Integer status = -1;
+
+        log.info("consumer端传输过来的用户信息是："+user);
         //判断用户名是否已经存在
         if(userService.isUserExists(user.getUserName())) {
             //
-            System.out.printf("用户名：%s已经存在了\n", user.getUserName());
-            return new ResponseEntity<Void>(HttpStatus.CONFLICT);
+            log.info("用户名：%s已经存在了\n" + user.getUserName());
+            return new ResponseEntity<>(status, HttpStatus.CONFLICT);
         }
         //调用业务方法
         userService.save(user);
+        status = 0;
 
-        //构建一个响应头
-        HttpHeaders headers = new HttpHeaders();
-        headers.setLocation(ucBuilder.path("/v1/api/users/{id}").buildAndExpand(user.getId()).toUri());
-        //
-        return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
+        log.info("Sign up successful!");
+        return new ResponseEntity<>(status, HttpStatus.CREATED);
     }
+
 }

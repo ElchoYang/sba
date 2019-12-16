@@ -11,9 +11,9 @@
                 <div class="logo_main">
                   <span class="logo_text_card">{{$t("msg.Common.PageTitle")}}</span>
                   <span class="login">
-                      <a @click="go('signup')">{{$t("msg.Navigation.signup")}}</a> | 
-                      <a @click="go('login')">{{$t("msg.Navigation.login")}}</a> |
-                      <a @click="go('logout')">{{$t("msg.Navigation.logout")}}</a>
+                      <a @click="go('signup')" id="signup">{{$t("msg.Navigation.signup")}}</a>
+                      <a @click="go('login')" id="login"> | {{$t("msg.Navigation.login")}}</a>
+                      <a @click="logout()" v-show="false" id="logout"> | {{$t("msg.Navigation.logout")}}</a>
                   </span>
                 </div>
               </el-col>
@@ -22,13 +22,13 @@
           <el-row>
             <el-col class="nav">
               <!-- Admin -->
-              <ul>
+              <ul id="adminNav" ref="adminNav" v-show="false">
                 <li @click="go(item.form.toLowerCase())" v-for="(item, index) in adminNav()" :key="index" :class="{'progress': item.form.toLowerCase().indexOf(currentForm().toLowerCase()) > -1}">
                   {{$t(item.title)}}
               </li> 
              </ul>
              <!-- User -->
-              <ul>
+              <ul id="userNav" ref="userNav" v-show="false">
                 <li @click="go(item.form.toLowerCase())" v-for="(item, index) in userNav()" :key="index" :class="{'progress': item.form.toLowerCase().indexOf(currentForm().toLowerCase()) > -1}">
                   {{$t(item.title)}}
               </li> 
@@ -38,7 +38,9 @@
         </nav>
       </section>
       <section class="section_body">
-        <router-view />
+        <div class="">
+          <router-view />
+        </div>
       </section>
     </div>
      
@@ -48,7 +50,7 @@
 
 <script>
 import { myTestSubmit } from '@/views/sba/apis/formPost'
-// import { isExistCustomer } from '@/views/sba/apis/index'
+import { logout } from '@/views/sba/apis/API'
 
 export default {
   name: 'app',
@@ -72,6 +74,11 @@ export default {
       const self = this
       console.log(page)
       myTestSubmit(page, self)
+    },
+    logout () {
+      const self = this
+      console.log('logout')
+      logout(self)
     }
   }
 }
@@ -80,7 +87,9 @@ export default {
 <style lang="less">
 @import "views/sba/assets/css/common.less";
 @import "views/sba/assets/css/main.less";
-
+.section_body .main_section{
+  justify-content: center;
+}
  
 .logo_PC {
   padding: 0 0 1rem;
@@ -133,6 +142,36 @@ export default {
   .progress {
     color: #000;
     border-bottom-color: #000;
+  }
+}
+.pc {
+  .main_section{
+    justify-content: center;
+  }
+  section.main_section {
+    .main_section_body {
+      margin: 0;
+      width: 100%;
+    }
+    .main_section_content {
+      padding: 1rem 2rem 0;
+      background-color: white;
+    }
+  }
+  .el-header {
+    margin: 0;
+    padding: 1rem 0;
+    text-align: left;
+    font-size: 1.125rem;
+    height: auto !important;
+  }
+  .el-main {
+    padding: 0;
+  }
+  .footer_row {
+    background-color: @MobilebgColor;
+    margin: 0;
+    padding: 30px 0;
   }
 }
 </style>

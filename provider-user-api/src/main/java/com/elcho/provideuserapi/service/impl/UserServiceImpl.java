@@ -24,6 +24,8 @@ public class UserServiceImpl implements UserService {
 
         BeanUtils.copyProperties(user, _user);
 
+        _user.setUserType("user");
+
         if(_user!=null)
             userRepository.save(_user);
     }
@@ -84,5 +86,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public String getUser() {
         return "ABC ";
+    }
+
+    @Override
+    public boolean isLoginUserExists(String userName, String password) {
+        return userRepository.existsByUserNameAndPassword(userName,password);
     }
 }
