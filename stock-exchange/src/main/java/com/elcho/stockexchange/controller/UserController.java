@@ -1,6 +1,7 @@
 package com.elcho.stockexchange.controller;
 
 import com.elcho.stockexchange.model.User;
+import com.netflix.ribbon.proxy.annotation.Http;
 import org.apache.commons.lang.StringEscapeUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -13,6 +14,7 @@ import org.w3c.dom.Document;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
+import javax.servlet.http.HttpSession;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -22,7 +24,7 @@ import java.util.function.Supplier;
 import java.util.logging.Logger;
 import java.io.StringReader;
 
-
+@CrossOrigin
 @RestController
 @RequestMapping( value = "/stockexchange/user")
 public class UserController {
@@ -31,8 +33,9 @@ public class UserController {
     @Autowired
     RestTemplate restTemplate;
 
+
     @RequestMapping(value = "/login", method = {RequestMethod.POST})
-    public ResponseEntity<User> login(@RequestBody User user, UriComponentsBuilder ucBuilder) throws ParserConfigurationException, IOException, SAXException {
+    public ResponseEntity<User> login(@RequestBody User user, UriComponentsBuilder ucBuilder, HttpSession session) throws ParserConfigurationException, IOException, SAXException {
         log.info("客户端传输过来的用户信息是："+user);
         ResponseEntity<User> entity =  restTemplate.postForEntity("http://provider-user-api/login",user, User.class);
         HttpStatus statusCode  = entity.getStatusCode();
@@ -40,6 +43,7 @@ public class UserController {
 
         User _user = entity.getBody();
         log.info("_user: " + _user);
+        session.setAttribute("user", _user);
 
         return new ResponseEntity<>(_user, HttpStatus.OK);
     }
@@ -57,7 +61,9 @@ public class UserController {
     }
 
     @RequestMapping(value = "/logout", method = {RequestMethod.POST})
-    public ResponseEntity<Integer> logout(){
+    public ResponseEntity<Integer> logout(HttpSession session){
+        session.removeAttribute("user");
+
         log.info("logout Successful");
         return new ResponseEntity<>(0, HttpStatus.OK);
     }

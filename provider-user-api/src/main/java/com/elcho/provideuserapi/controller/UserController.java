@@ -74,7 +74,7 @@ public class UserController {
     }
 
 
-    // sign up
+    // Login
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public ResponseEntity<User> login(@RequestBody User user, UriComponentsBuilder ucBuilder) {
         User _user = new User();
