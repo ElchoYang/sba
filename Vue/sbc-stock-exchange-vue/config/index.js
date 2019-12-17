@@ -17,12 +17,26 @@ module.exports = {
 
         secure: false
       },
-      '/api': {  //使用"/api"来代替"http://f.apiplus.c" 
-        target: 'http://192.168.31.21:8200', //源地址 
+      '/user': {  //使用"/api"来代替"http://f.apiplus.c" 
+        target: 'http://localhost:8200', //源地址  http://9.112.43.38:8200 http://192.168.31.21:8200
         changeOrigin: true, //改变源 
         pathRewrite: { 
-          '^/api': '' //路径重写 
+          '^/user': '' //路径重写 
           } 
+      },
+      '/com': {  //使用"/api"来代替"http://f.apiplus.c" 
+        target: 'http://localhost:8001', //源地址  http://9.112.43.38:8001 http://192.168.31.21:8200
+        changeOrigin: true, //改变源 
+        pathRewrite: { 
+          '^/com': '' //路径重写 
+        }
+      },
+      '/stock': {  //使用"/api"来代替"http://f.apiplus.c" 
+        target: 'http://localhost:8004', //源地址  http://9.112.43.38:8004 http://192.168.31.21:8200
+        changeOrigin: true, //改变源 
+        pathRewrite: { 
+          '^/stock': '' //路径重写 
+        }
       }
     },
     //http://localhost:54122

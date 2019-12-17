@@ -1,8 +1,8 @@
 import Axios from '@/assets/js/AxiosPlugin'
-import {BASE_PATH} from '@/views/sba/apis/baseSetup'
+import { API_URL_USER } from '@/views/sba/apis/baseSetup'
 
 export const signUpForm = (param, data, self) => {
-  Axios.post(BASE_PATH + '/stockexchange/user/signup', data).then(function (res) {
+  Axios.post(API_URL_USER + '/stockexchange/user/signup', data).then(function (res) {
     return res
   }).then(function (res) {
     console.log(res)
@@ -20,7 +20,7 @@ export const signUpForm = (param, data, self) => {
   })
 }
 export const login = (param, data, self) => {
-  Axios.post(BASE_PATH + '/stockexchange/user/login', data).then(function (res) {
+  Axios.post(API_URL_USER + '/stockexchange/user/login', data).then(function (res) {
     return res
   }).then(function (res) {
     console.log(res)
@@ -52,7 +52,7 @@ export const login = (param, data, self) => {
 }
 
 export const logout = (self) => {
-  Axios.post(BASE_PATH + '/stockexchange/user/logout').then(function (res) {
+  Axios.post(API_URL_USER + '/stockexchange/user/logout').then(function (res) {
     return res
   }).then(function (res) {
     console.log(res)
@@ -61,6 +61,9 @@ export const logout = (self) => {
     })
     document.getElementById('userNav').style.display = 'none'
     document.getElementById('adminNav').style.display = 'none'
+    document.getElementById('login').style.display = 'inline-block'
+    document.getElementById('logout').style.display = 'none'
+    document.getElementById('signup').style.display = 'inline-block'
   }).catch(function (error) {
     self.isBtnLoading = false
     console.log(error.message)
@@ -69,14 +72,49 @@ export const logout = (self) => {
 
 // Document Upload
 export const uploadFile = (data, config) => {
-  return Axios.post(BASE_PATH + '/stockexchange/stockPrice/UploadFile', data, config).then(function (res) {
+  return Axios.post(API_URL_USER + '/stockexchange/stockPrice/UploadFile', data, config).then(function (res) {
     return res
   })
 }
 
 // Download Upload
 export const downloadFile = (data) => {
-  return Axios.post(BASE_PATH + '/stockexchange/stockPrice/download', { 'id': data }).then(function (res) {
+  return Axios.post(API_URL_USER + '/stockexchange/stockPrice/download', { 'id': data }).then(function (res) {
     return res
+  })
+}
+
+// Create Company
+export const createComany = (param, data, self) => {
+  return Axios.post(API_URL_USER + '/stockexchange/company/new', data).then(function (res) {
+    return res
+  })
+}
+
+// Load Company
+export const loadCompany = () => {
+  return Axios.get(API_URL_USER + '/stockexchange/company/list').then(function (res) {
+    console.log(res)
+    return res
+  })
+}
+
+// Create Stock
+export const createStock = (param, data, self) => {
+  Axios.post(API_URL_USER + '/stockexchange/stock/create', data).then(function (res) {
+    return res
+  }).then(function (res) {
+    console.log(res)
+    if (res.data === 0) { // response success
+      self.$router.push({
+        name: 'managecompany',
+        query: {...self.$route.query}
+      })
+    } else {
+      self.showMessage(self, res)
+    }
+  }).catch(function (error) {
+    self.isBtnLoading = false
+    console.log(error.message)
   })
 }

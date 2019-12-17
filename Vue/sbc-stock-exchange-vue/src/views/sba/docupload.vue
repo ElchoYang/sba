@@ -26,7 +26,7 @@
 <script>
 import docUpload from '@/views/sba/components/documentUpload/fFileUpload'
 import { SubmitUpload02 } from '@/views/sba/apis/formPost'
-import { downloadFile } from  '@/views/sba/apis/API'
+import { downloadFile } from '@/views/sba/apis/API'
 
 export default {
   components: {
@@ -73,19 +73,21 @@ export default {
     },
     doChangeDown (data, fileName) {
       var a = document.createElement('a')
-        var bstr = atob(data), n = bstr.length, u8arr = new Uint8Array(n)
-        while (n--) {
+      var bstr = atob(data)
+      var n = bstr.length
+      var u8arr = new Uint8Array(n)
+      while (n--) {
         u8arr[n] = bstr.charCodeAt(n)
-        }
-        var blob =  new Blob([u8arr], { type: 'application/octet-stream' })
-        console.log('blob')
-        console.log(blob)
-        var url = window.URL.createObjectURL(blob)
-        console.log('URL:' + url)
-        a.href = url
-        a.download = fileName
-        a.click()
-        window.URL.revokeObjectURL(url)
+      }
+      var blob = new Blob([u8arr], { type: 'application/octet-stream' })
+      console.log('blob')
+      console.log(blob)
+      var url = window.URL.createObjectURL(blob)
+      console.log('URL:' + url)
+      a.href = url
+      a.download = fileName
+      a.click()
+      window.URL.revokeObjectURL(url)
     }
   }
 }

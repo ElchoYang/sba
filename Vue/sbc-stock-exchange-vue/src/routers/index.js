@@ -11,7 +11,7 @@ Vue.use(Router)
 export default new Router({
   mode: 'history',
   fallback: false,
-  base: '/stockexchange/', // for build only
+  base: '/stockexchange', // for build only
   routes: [
     {
       path: '/',

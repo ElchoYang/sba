@@ -16,7 +16,10 @@ module.exports = {
       sltStock: 'Select Stock Exchange',
       fromPeriod: 'From Period',
       toPeriod: 'To Period',
-      specifyPeriodicty: 'Specify Periodicty'
+      specifyPeriodicty: 'Specify Periodicty',
+      boardOfDirector: 'Board Of Director',
+      sector: 'Sector',
+      code: 'Code'
     },
     Navigation: {
       login: 'Login',

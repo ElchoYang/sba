@@ -1,6 +1,6 @@
 import Axios from '@/assets/js/AxiosPlugin'
 import {
-  BASE_PATH
+  API_URL_USER
 } from '@/views/sba/apis/baseSetup'
 
 // get URL param
@@ -24,7 +24,7 @@ export const myTestSubmit = (page, self) => {
   })
 }
 export const SubmitList = (param, data, self) => {
-  Axios.post(BASE_PATH + '/stockexchange/' + param + '/submit', data).then(function (res) {
+  Axios.post(API_URL_USER + '/stockexchange/' + param + '/submit', data).then(function (res) {
     return res
   }).then(function (res) {
     self.isBtnLoading = false
@@ -45,18 +45,18 @@ export const SubmitList = (param, data, self) => {
 }
 
 export const SubmitWithCallBack = (param, data) => {
-  return Axios.post(BASE_PATH + '/stockexchange/' + param + '/submit', data).then(function (res) {
+  return Axios.post(API_URL_USER + '/stockexchange/' + param + '/submit', data).then(function (res) {
     return res
   })
 }
 export const ToSubmitDoc = () => {
-  return Axios.post(BASE_PATH + '/stockexchange/form09/ToSubmitDoc').then(function (res) {
+  return Axios.post(API_URL_USER + '/stockexchange/form09/ToSubmitDoc').then(function (res) {
     return res
   })
 }
 
 export const SubmitUpload02 = (data) => {
-  return Axios.post(BASE_PATH + '/stockexchange/DocUpload/uploadstep02/submit', data).then(function (res) {
+  return Axios.post(API_URL_USER + '/stockexchange/DocUpload/uploadstep02/submit', data).then(function (res) {
     return res
   })
 }

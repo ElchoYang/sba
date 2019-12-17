@@ -23,7 +23,7 @@ export default [
   {
     path: '/importdata',
     name: 'importdata',
-    component: resolve => require(['@/views/sba/importdata.vue'], resolve)
+    component: resolve => require(['@/views/sba/docupload.vue'], resolve)
   },
   {
     path: '/managecompany',

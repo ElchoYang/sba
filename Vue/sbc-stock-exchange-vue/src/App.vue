@@ -9,7 +9,7 @@
             <div>
               <el-col :span="18" :push="3" class="logo logo_PC">
                 <div class="logo_main">
-                  <span class="logo_text_card">{{$t("msg.Common.PageTitle")}}</span>
+                  <span class="logo_text_card" @click="go('login')">{{$t("msg.Common.PageTitle")}}</span>
                   <span class="login">
                       <a @click="go('signup')" id="signup">{{$t("msg.Navigation.signup")}}</a>
                       <a @click="go('login')" id="login"> | {{$t("msg.Navigation.login")}}</a>
