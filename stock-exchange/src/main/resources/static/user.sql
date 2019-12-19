@@ -1,0 +1,1 @@
+INSERT INTO `tbl_user`(`confirmed`, `email`, `mobile`, `password`, `user_name`, `user_type`) VALUES (true,"admin@admin.com", "0755-09999","123456","Admin","Admin" )

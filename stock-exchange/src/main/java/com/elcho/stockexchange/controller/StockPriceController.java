@@ -1,9 +1,14 @@
 package com.elcho.stockexchange.controller;
 
+import com.elcho.stockexchange.Utils.ExcelUtils;
 import com.elcho.stockexchange.model.PriceUploadSummary;
 
+import com.elcho.stockexchange.model.StockPrice;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,22 +27,23 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.UUID;
-import java.util.logging.Logger;
 
 @CrossOrigin
 @RestController
 @RequestMapping( value = "/stockexchange/stockPrice")
 public class StockPriceController {
-    private static final Logger log = Logger.getLogger(String.valueOf(UserController.class));
+    private static final Logger log = LoggerFactory.getLogger(StockPriceController.class);
     private final String UPLOAD_DIR = "C:\\upload_dir\\";
 
     @Autowired
     RestTemplate restTemplate;
 
     @PostMapping(value = "/UploadFile")
-    public ResponseEntity<PriceUploadSummary> UploadFile(@RequestParam("file") MultipartFile uploadFile, UriComponentsBuilder ucBuilder, HttpSession session) throws IOException {
+    public ResponseEntity<List<PriceUploadSummary>> UploadFile(@RequestParam("file") MultipartFile uploadFile, UriComponentsBuilder ucBuilder, HttpSession session) throws IOException {
         PriceUploadSummary summary = new PriceUploadSummary();
         System.out.println(uploadFile);
         log.info("-- 上传的文件名："+uploadFile.getOriginalFilename());
@@ -51,15 +57,34 @@ public class StockPriceController {
         FileCopyUtils.copy(uploadFile.getInputStream(), new FileOutputStream(new File(fullname)));
         log.info("-- 把上传的源文件COPY到目标文件完成....");
 
-        return new ResponseEntity<>(summary, HttpStatus.OK);
+        List<StockPrice> list = ExcelUtils.excelToShopIdList(uploadFile.getInputStream());
+
+        log.info(String.valueOf(list));
+
+        ResponseEntity<Integer> entity =  restTemplate.postForEntity("http://PROVIDER-COMPANY-API/newPriceList",list, Integer.class);
+        if(entity.getBody()!=null && entity.getBody() == 0){
+            summary.setRecordNumber(list.size());
+            summary.setCompany(list.get(0).getCompanyCode());
+            summary.setStockExchange(list.get(0).getStockExchange());
+            summary.setFormDate(list.get(0).getDate());
+            summary.setToDate(list.get(list.size()-1).getDate());
+            log.info("Save Successful !");
+        } else {
+            log.info("Save Failed !");
+        }
+
+        List<PriceUploadSummary> summaryList = new ArrayList<>();
+        summaryList.add(summary);
+
+        return new ResponseEntity<>(summaryList, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/download", method = RequestMethod.POST)
-    public void downloadFile(@RequestBody HashMap map, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    @RequestMapping(value = "/download/{name}", method = RequestMethod.GET)
+    public void downloadFile(@PathVariable("name") String fileName, HttpServletRequest request, HttpServletResponse response) throws Exception {
         String realpath = UPLOAD_DIR;
-        log.info("要下载的文件名："+map.get("id"));
+        log.info("要下载的文件名："+ fileName);
         //找到指定的文件
-        String id = (String) map.get("id");
+        String id = fileName;
         File parent = new File(realpath);
         File target = new File(parent, id);
         //

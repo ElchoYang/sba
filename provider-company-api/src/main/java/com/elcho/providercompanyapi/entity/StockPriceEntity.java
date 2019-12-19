@@ -29,7 +29,7 @@ public class StockPriceEntity {
     @Column
     private Date date;
 
-    @Column
+    @Column //(unique = true)
     private Time time;
 
 }

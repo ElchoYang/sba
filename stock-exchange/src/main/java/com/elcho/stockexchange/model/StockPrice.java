@@ -3,6 +3,8 @@ package com.elcho.stockexchange.model;
 import lombok.Data;
 
 import java.math.BigDecimal;
+
+
 import java.sql.Time;
 import java.util.Date;
 
